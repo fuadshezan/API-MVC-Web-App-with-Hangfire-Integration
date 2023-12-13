@@ -1,0 +1,66 @@
+﻿@using P3.Core.Data;
+@using P3.Web.Models;
+@model Symbol
+@{
+	ViewData["Title"] = "P3 Downloader - History Data";
+}
+
+@*<h2>@ViewData["Title"]</h2>*@
+
+<div>
+	<a href="@Url.Action("TestApiConnection", "Home")" class="btn btn-primary">Test Api Connection</a>
+	@if (!string.IsNullOrEmpty(ViewBag.Message))
+	{
+		<p>Message: <b>(@ViewBag.Message)</b></p>
+	}
+</div>
+<br />
+<a href="@Url.Action("GetFailedDate", "Home")" class="btn btn-primary">Pending Data</a>
+<a href="@Url.Action("DailyToWeeklyConvert", "Home")" class="btn btn-primary">Convert Daily data into Weekly</a>
+@* <a href="@Url.Action("dailyToWeeklyConvert", "Home")" class="btn btn-primary > Convert Daily data into Weekly </a> *@
+<br />
+<br />
+<div>
+
+	<a href="@Url.Action("ProcessData", "Home")" class="btn btn-primary">Create Recurring Job</a>
+	<div>
+		@if (!string.IsNullOrEmpty(ViewBag.NextOccuranceDaily))
+		{
+			<h4>Daily Next Time: <b>@(ViewBag.NextOccuranceDaily)</b> Minute Next Time: <b> @(ViewBag.NextOccuranceMinute)</b></h4>
+			@*<p></p>*@
+		}
+		<ul>
+			<li>Upon button press, a recurring job is created in the system's job scheduler.</li>
+			<li>The job is configured to run daily at a specific predetermined time.</li>
+			<li>At the specified time each day, the job is triggered to start its execution.</li>
+			<li>Within the execution context of the jobFire and forget methods are invoked to perform certain tasks.</li>
+		</ul>
+	</div>
+</div>
+<br />
+<div>
+	<a href="@Url.Action("DeleteDataFromHangFire", "Home")" class="btn btn-primary">Reset Hangfire</a>
+	<div>
+		<ul>
+			<li>Upon button press, the system triggers the deletion of existing Hangfire table data related to the recurring job.</li>
+			<li>This clears any previous job records and ensures a clean slate for the new job.</li>
+			<li>After data deletion, a new recurring job is created using the Hangfire job scheduling.</li>
+		</ul>
+	</div>
+</div>
+<br />
+<div>
+	<a href="@Url.Action("FireJob", "Home")" class="btn btn-primary">Fire & Forget</a>
+	<div>
+		<ul>
+			<li>Upon button press, the system creates individual jobs for each symbol that requires data retrieval.</li>
+			<li>The number of jobs depends on the list of symbols or entities that need data processing.</li>
+			<li>Each individual job, representing a symbol, is responsible for hitting the API to retrieve relevant data.</li>
+			<li>Once the data is retrieved from the API, the job processes the data and inserts it into the database.</li>
+
+
+		</ul>
+	</div>
+</div>
+
+
